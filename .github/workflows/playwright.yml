@@ -1,0 +1,131 @@
+name: Playwright Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run tests daily at 3 AM CET (2 AM UTC) for continuous monitoring
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      browser:
+        description: 'Browser to test (chromium, firefox, webkit, all)'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - chromium
+          - firefox
+          - webkit
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project: ${{ github.event.inputs.browser == 'all' || github.event.inputs.browser == '' && fromJSON('["chromium", "firefox", "webkit"]') || fromJSON(format('["{0}"]', github.event.inputs.browser)) }}
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    
+    - name: Run Playwright tests
+      run: npx playwright test --project=${{ matrix.project }}
+      env:
+        CI: true
+        
+    - name: Generate test summary
+      if: always()
+      run: |
+        echo "## Test Results Summary 📊" >> $GITHUB_STEP_SUMMARY
+        echo "- **Browser**: ${{ matrix.project }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Trigger**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Status**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+        if [ -f "test-results/results.json" ]; then
+          echo "- **Test Results**: Available in artifacts" >> $GITHUB_STEP_SUMMARY
+        fi
+    
+    - name: Upload Playwright Report
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: playwright-report-${{ matrix.project }}
+        path: playwright-report/
+        retention-days: 7
+    
+    - name: Upload Test Results
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: test-results-${{ matrix.project }}
+        path: test-results/
+        retention-days: 7
+
+  # Daily monitoring notification
+  notify:
+    if: github.event_name == 'schedule' && (success() || failure())
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Daily test notification
+      run: |
+        echo "## 🔔 Daily Test Monitoring Report"
+        echo "Daily automated tests have completed."
+        echo "- **Date**: $(date)"
+        echo "- **Status**: ${{ needs.test.result }}"
+        echo "- **Repository**: ${{ github.repository }}"
+        echo "- **Workflow**: ${{ github.workflow }}"
+        if [ "${{ needs.test.result }}" == "failure" ]; then
+          echo "⚠️ Some tests failed. Please check the artifacts and logs."
+        else
+          echo "✅ All tests passed successfully!"
+        fi
+
+  # Combine all test reports into a single artifact
+  merge-reports:
+    if: always() && needs.test.result == 'failure'
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: artifacts
+    
+    - name: Merge HTML Reports
+      run: |
+        mkdir -p merged-reports
+        cp -r artifacts/playwright-report-*/* merged-reports/ || true
+    
+    - name: Upload merged report
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: merged-playwright-report
+        path: merged-reports/
+        retention-days: 7

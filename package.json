@@ -1,0 +1,39 @@
+{
+  "name": "aqa-playwright-project",
+  "version": "1.0.0",
+  "description": "Comprehensive Playwright test automation framework for AutomationExercise.com - Academic Final Paper Implementation",
+  "main": "index.js",
+  "license": "MIT",
+  "keywords": [
+    "playwright",
+    "typescript",
+    "test-automation",
+    "e2e-testing",
+    "api-testing",
+    "page-object-model",
+    "academic-project"
+  ],
+  "author": "Academic Final Paper Project",
+  "devDependencies": {
+    "@playwright/test": "^1.53.2",
+    "@types/node": "^24.0.10"
+  },
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "test:e2e": "playwright test --ignore-snapshots tests/*.spec.ts",
+    "test:api": "playwright test tests/api/",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "test:parallel": "playwright test --workers=4",
+    "report": "playwright show-report",
+    "install:browsers": "playwright install",
+    "install:deps": "playwright install-deps"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

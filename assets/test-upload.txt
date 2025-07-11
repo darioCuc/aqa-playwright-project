@@ -1,0 +1,11 @@
+This is a test file for contact form upload functionality.
+Used in Playwright automation tests for the Contact Us form.
+File created for testing file upload feature.
+
+Test data:
+- Name: Test User
+- Email: test@example.com
+- Subject: Test Contact Form
+- Message: This is a test message to verify the contact form functionality.
+
+Date: 2024
