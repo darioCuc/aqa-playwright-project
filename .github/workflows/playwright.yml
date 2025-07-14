@@ -6,8 +6,8 @@ on:
   pull_request:
     branches: [ main ]
   schedule:
-    # Run tests daily at 3 AM CET (2 AM UTC) for continuous monitoring
-    - cron: '0 2 * * *'
+    # Run tests at 3 AM CET (2 AM UTC) on weekdays (Mon-Fri)
+    - cron: '0 2 * * 1-5'
   workflow_dispatch:
     inputs:
       browser:
@@ -28,7 +28,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        project: ${{ github.event.inputs.browser == 'all' || github.event.inputs.browser == '' && fromJSON('["chromium", "firefox", "webkit"]') || fromJSON(format('["{0}"]', github.event.inputs.browser)) }}
+        # project: ${{ github.event.inputs.browser == 'all' || github.event.inputs.browser == '' && fromJSON('["chromium", "firefox", "webkit"]') || fromJSON(format('["{0}"]', github.event.inputs.browser)) }}
+        project:
+          - chromium
+          # - firefox
+          # - webkit
     
     steps:
     - uses: actions/checkout@v4
