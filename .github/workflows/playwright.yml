@@ -31,7 +31,7 @@ jobs:
         # project: ${{ github.event.inputs.browser == 'all' || github.event.inputs.browser == '' && fromJSON('["chromium", "firefox", "webkit"]') || fromJSON(format('["{0}"]', github.event.inputs.browser)) }}
         project:
           - chromium
-          # - firefox
+          - firefox
           # - webkit
     
     steps:
