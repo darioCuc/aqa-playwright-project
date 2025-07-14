@@ -139,7 +139,8 @@ test.describe('Checkout & Orders', () => {
   // 20. Click 'Continue' button
   // 21. Click 'Delete Account' button
   // 22. Verify 'ACCOUNT DELETED!' and click 'Continue' button
-  test('Download invoice after order completion', async ({ pages }) => {
+  test('Download invoice after order completion', async ({ pages, browserName }) => {
+    test.skip(browserName === 'webkit', 'Downloads are not supported in WebKit headless mode');
     // Generate test data
     const userData = UserDataGenerator.generateUniqueUser();
     const accountInfo = UserDataGenerator.generateAccountInfo(userData);
