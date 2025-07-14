@@ -28,11 +28,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # project: ${{ github.event.inputs.browser == 'all' || github.event.inputs.browser == '' && fromJSON('["chromium", "firefox", "webkit"]') || fromJSON(format('["{0}"]', github.event.inputs.browser)) }}
-        project:
-          - chromium
-          - firefox
-          # - webkit
+        project: ${{ github.event.inputs.browser == 'all' || github.event.inputs.browser == '' && fromJSON('["chromium", "firefox", "webkit"]') || fromJSON(format('["{0}"]', github.event.inputs.browser)) }}
+        # project:
+        #   - chromium
+        #   - firefox
+        #   - webkit
     
     steps:
     - uses: actions/checkout@v4
