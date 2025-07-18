@@ -313,6 +313,7 @@ For questions or issues:
 1. Check the [GitHub Issues](https://github.com/your-username/aqa-playwright-project/issues)
 2. Review the [Playwright Documentation](https://playwright.dev/)
 3. Consult the project's helper documentation in `/helpers/README.md`
+4. Contact the project creator -> @darioCuc
 
 ---
 
