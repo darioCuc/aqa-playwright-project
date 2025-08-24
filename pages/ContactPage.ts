@@ -45,7 +45,9 @@ export class ContactPage extends BasePage {
     await this.messageTextArea().fill(contactData.message);
     
     if (contactData.filePath) {
+      await this.page.waitForTimeout(1000);
       await this.uploadFileInput().setInputFiles(contactData.filePath);
+      await this.page.waitForTimeout(1000);
     }
   }
 
