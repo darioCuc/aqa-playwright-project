@@ -1,8 +1,13 @@
-import { BasePage } from './BasePage';
+import { Page } from '@playwright/test';
 import { ConsentHelper } from '../helpers/consent-helper';
 import { expect } from '@playwright/test';
 
-export class ProductCatalogPage extends BasePage {
+export class ProductCatalogPage {
+  readonly page: Page;
+
+  constructor(page: Page) {
+    this.page = page;
+  }
   productList = () => this.page.locator('.features_items');
   searchInput = () => this.page.locator('input#search_product');
   searchButton = () => this.page.locator('button#submit_search');

@@ -1,6 +1,11 @@
-import { BasePage } from './BasePage';
+import { Page } from '@playwright/test';
 
-export class SignupPage extends BasePage {
+export class SignupPage {
+  readonly page: Page;
+
+  constructor(page: Page) {
+    this.page = page;
+  }
   // Initial signup form elements
   nameInput = () => this.page.locator('input[data-qa="signup-name"]');
   emailInput = () => this.page.locator('input[data-qa="signup-email"]');

@@ -1,7 +1,12 @@
-import { BasePage } from './BasePage';
+import { Page } from '@playwright/test';
 import { ConsentHelper } from '../helpers/consent-helper';
 
-export class ContactPage extends BasePage {
+export class ContactPage {
+  readonly page: Page;
+
+  constructor(page: Page) {
+    this.page = page;
+  }
   // Contact form elements
   nameInput = () => this.page.locator('input[data-qa="name"]');
   emailInput = () => this.page.locator('input[data-qa="email"]');

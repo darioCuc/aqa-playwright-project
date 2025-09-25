@@ -110,7 +110,6 @@ aqa-playwright-project/
 │   ├── user-data.ts               # Test data generators
 │   └── index.ts                   # Helper exports
 ├── pages/
-│   ├── BasePage.ts                # Base page class
 │   ├── HomePage.ts                # Home page object
 │   ├── LoginPage.ts               # Login page object
 │   ├── SignupPage.ts              # Signup page object
@@ -255,7 +254,6 @@ The project includes a comprehensive GitHub Actions workflow (`.github/workflows
 ## 🏗️ Architecture
 
 ### Page Object Model
-- **BasePage**: Common functionality for all pages
 - **Specialized Pages**: Each page has its own class with specific methods
 - **Locator Strategy**: Robust element selection using Playwright locators
 - **Action Methods**: High-level actions that combine multiple steps

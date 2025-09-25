@@ -1,6 +1,11 @@
-import { BasePage } from './BasePage';
+import { Page } from '@playwright/test';
 
-export class CheckoutPage extends BasePage {
+export class CheckoutPage {
+  readonly page: Page;
+
+  constructor(page: Page) {
+    this.page = page;
+  }
   addressSection = () => this.page.locator('.checkout-information');
   placeOrderButton = () => this.page.getByRole('link', { name: 'Place Order' });
   orderConfirmation = () => this.page.locator('.order-confirmation');

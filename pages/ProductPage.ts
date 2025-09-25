@@ -1,6 +1,11 @@
-import { BasePage } from './BasePage';
+import { Page } from '@playwright/test';
 
-export class ProductPage extends BasePage {
+export class ProductPage {
+  readonly page: Page;
+
+  constructor(page: Page) {
+    this.page = page;
+  }
   productTitle = () => this.page.locator('.product-information h2');
   productPrice = () => this.page.locator('.product-information span span');
   addToCartButton = () => this.page.locator('button.cart');

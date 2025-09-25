@@ -1,7 +1,12 @@
-import { BasePage } from './BasePage';
+import { Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 
-export class CartPage extends BasePage {
+export class CartPage {
+  readonly page: Page;
+
+  constructor(page: Page) {
+    this.page = page;
+  }
   cartTable = () => this.page.locator('#cart_info_table');
   checkoutButton = () => this.page.locator('.check_out');
   removeButton = () => this.page.locator('.cart_quantity_delete');

@@ -1,6 +1,11 @@
-import { BasePage } from './BasePage';
+import { Page } from '@playwright/test';
 
-export class LoginPage extends BasePage {
+export class LoginPage {
+  readonly page: Page;
+
+  constructor(page: Page) {
+    this.page = page;
+  }
   emailInput = () => this.page.locator('input[data-qa="login-email"]');
   passwordInput = () => this.page.locator('input[data-qa="login-password"]');
   loginButton = () => this.page.locator('button[data-qa="login-button"]');

@@ -1,6 +1,11 @@
-import { BasePage } from './BasePage';
+import { Page } from '@playwright/test';
 
-export class TestCasesPage extends BasePage {
+export class TestCasesPage {
+  readonly page: Page;
+
+  constructor(page: Page) {
+    this.page = page;
+  }
   // Page elements
   testCasesHeader = () => this.page.locator('h2:has-text("Test Cases"), .title:has-text("Test Cases")');
   testCasesList = () => this.page.locator('.test-cases-list, .panel-group');

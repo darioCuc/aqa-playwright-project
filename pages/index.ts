@@ -1,5 +1,4 @@
 // Export all page objects for easier imports
-export { BasePage } from './BasePage';
 export { HomePage } from './HomePage';
 export { LoginPage } from './LoginPage';
 export { SignupPage } from './SignupPage';

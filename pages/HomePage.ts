@@ -1,7 +1,12 @@
-import { BasePage } from './BasePage';
+import { Page } from '@playwright/test';
 import { ConsentHelper } from '../helpers/consent-helper';
 
-export class HomePage extends BasePage {
+export class HomePage {
+  readonly page: Page;
+
+  constructor(page: Page) {
+    this.page = page;
+  }
   navBar = () => this.page.locator('ul.nav.navbar-nav');
   featuredProducts = () => this.page.locator('.features_items').first();
   signupLoginLink = () => this.page.getByRole('link', { name: ' Signup / Login' }).first();
