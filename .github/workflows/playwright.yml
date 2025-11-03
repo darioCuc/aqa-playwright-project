@@ -5,9 +5,9 @@ on:
     branches: [ main, develop ]
   pull_request:
     branches: [ main ]
-  schedule:
-    # Run tests at 3 AM CET (2 AM UTC) on weekdays (Mon-Fri)
-    - cron: '0 2 * * 1-5'
+  # schedule:
+  #   # Run tests at 3 AM CET (2 AM UTC) on weekdays (Mon-Fri)
+  #   - cron: '0 2 * * 1-5'
   workflow_dispatch:
     inputs:
       browser:
